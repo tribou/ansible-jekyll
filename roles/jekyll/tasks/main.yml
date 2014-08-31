@@ -1,0 +1,5 @@
+---
+- name: Install jekyll gem
+  command: /usr/local/rvm/bin/rvm all do gem install jekyll --version {{jekyll_version}}
+- name: Install nodejs (execjs dependency)
+  action: apt pkg=nodejs state=installed

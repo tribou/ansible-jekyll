@@ -1,0 +1,7 @@
+---
+- hosts: jekyll
+  roles:
+    - common
+    - nginx
+    - git
+    - jekyll

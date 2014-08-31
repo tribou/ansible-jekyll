@@ -1,0 +1,9 @@
+#!/bin/bash -l
+GIT_REPO=$HOME/{{git_repo_dir}}/{{git_repo}}
+TMP_GIT_CLONE=$HOME/tmp/git/{{git_repo}}
+PUBLIC_WWW={{http_root}}
+
+git clone $GIT_REPO $TMP_GIT_CLONE
+jekyll build --source $TMP_GIT_CLONE --destination $PUBLIC_WWW
+rm -Rf $TMP_GIT_CLONE
+exit
