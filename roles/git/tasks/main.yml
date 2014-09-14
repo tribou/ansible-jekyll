@@ -4,7 +4,7 @@
 - name: Create git group
   group: name=git
 - name: Create git user
-  user: name=git groups=git,{{http_user}} append=yes shell=/bin/bash home=/home/git/
+  user: name=git groups=git,{{http_user}} append=yes shell=/bin/bash home=/home/git
 - name: Add git user authorized_key
   authorized_key: user=git key="{{git_user_key}}"
 - name: Create git repo directory
