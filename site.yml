@@ -1,5 +1,5 @@
 ---
-- hosts: jekyll
+- hosts: localhost
   roles:
     - common
     - nginx
