@@ -3,8 +3,8 @@
 # Override any in your local ansible group_vars/jekyll.yml
 http_user: www-data
 http_root: /var/www/public
-jekyll_version: 2.3.0
-ruby_version: 2.1.2
+jekyll_version: 3.0.5
+ruby_version: 2.3.1
 
 server_hostname: example.com
 git_user_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
