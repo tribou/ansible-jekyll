@@ -5,7 +5,6 @@ http_user: www-data
 http_root: /var/www/public
 jekyll_version: 3.0.5
 ruby_version: 2.3.1
-rvm_user: cloud-user
 
 server_hostname: $hostname
 git_user_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
