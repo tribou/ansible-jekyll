@@ -18,4 +18,4 @@
       private: yes
     - name: "githubbranch"
       prompt: "Enter the branch you want to build"
-      private: yes
+      private: no
