@@ -9,3 +9,13 @@
   remote_user: cloud-user
   become: yes
   become_method: sudo
+  vars_prompt: 
+    - name: "githubuser" 
+      prompt: "Enter your github username" 
+      private: no 
+    - name: "githubpassword" 
+      prompt: "Enter your github password" 
+      private: yes
+    - name: "githubbranch"
+      prompt: "Enter the branch you want to build"
+      private: no
