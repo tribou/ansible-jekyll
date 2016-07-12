@@ -12,6 +12,8 @@ First, copy the group_vars/jekyll.yml to a local group_vars/jekyll.yml file and 
 ansible-playbook site.yml
 ```
 
+Use a private key if needed.
+
 Then, to deploy a Jekyll site to your new server:
 
 ```bash
