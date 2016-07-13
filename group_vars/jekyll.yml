@@ -11,5 +11,5 @@ git_user_key: "{{ lookup('file', '~/.ssh/authorized_keys') }}"
 
 # These two will form the path for the git remote:
 # e.g. git@example.com:repos/example-repo.git
-git_repo: metapod-docs.git
+git_repo: summit-example.git
 git_repo_dir: repos
