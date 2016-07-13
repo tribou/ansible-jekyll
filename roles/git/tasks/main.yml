@@ -1,28 +1,23 @@
 ---
 - name: Install git
   action: apt pkg=git-core state=installed
+- name: Create git group
+  group: name=git
+- name: Create git user
+  user: name=git groups=git,{{http_user}} append=yes shell=/bin/bash home=/home/git
+- name: Add git user authorized_key
+  authorized_key: user=git key="{{git_user_key}}"
 - name: Create git repo directory
-  file: path=/home/cloud-user/{{git_repo_dir}}/{{git_repo}} owner=cloud-user group=cloud-user mode=0755 state=directory
-
+  file: path=/home/git/{{git_repo_dir}}/{{git_repo}} owner=git group=git mode=0755 state=directory
 - name: Initialize bare git repo
-  # become: no
-  git: 
-      repo=git@github.com:{{githubuser}}/{{git_repo}}
-      dest={{git_repo_dir}}/{{git_repo}}
-      accept_hostkey=yes
-      force=yes
-      bare=yes
-      remote={{githubuser}}
-      recursive=no
-      update=yes
-      key_file=/home/cloud-user/.ssh/id_rsa.pub
-      version={{githubbranch}}
-
+  command: git init --bare chdir=/home/git/{{git_repo_dir}}/{{git_repo}}
+  sudo: yes
+  sudo_user: git
 - name: Copy post-receive hook
-  template: src=post-receive dest=/home/cloud-user/{{git_repo_dir}}/{{git_repo}}/hooks/post-receive
-  become: yes
-  become_user: cloud-user
+  template: src=post-receive dest=/home/git/{{git_repo_dir}}/{{git_repo}}/hooks/post-receive
+  sudo: yes
+  sudo_user: git
   args:
-    owner: cloud-user
-    group: cloud-user
+    owner: git
+    group: git
     mode: 0755

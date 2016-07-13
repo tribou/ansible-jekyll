@@ -6,6 +6,6 @@
     - nginx
     - git
     - jekyll
-  remote_user: cloud-user
+  remote_user: user
   become: yes
   become_method: sudo
