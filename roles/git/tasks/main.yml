@@ -5,7 +5,7 @@
   group: name=git
 - name: Create git user
   user: name=git groups=git,{{http_user}} append=yes shell=/bin/bash home=/home/git
-- name: Add git user authorized_key
+- name: Add git user authorized_key, in the case of a private repo you may want to use a deploy key, see https://developer.github.com/guides/managing-deploy-keys/#deploy-keys
   authorized_key: user=git key="{{git_user_key}}"
 - name: Create git repo directory
   file: path=/home/git/{{git_repo_dir}}/{{git_repo}} owner=git group=git mode=0755 state=directory
