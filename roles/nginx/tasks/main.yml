@@ -1,16 +1,30 @@
 ---
 - name: Create http_user
   user: name={{http_user}} group={{http_user}}
+  become: yes
+  become_method: sudo
 - name: Install nginx
   action: apt pkg=nginx state=installed
+  become: yes
+  become_method: sudo
+  become_user: root
 - name: Create public HTML directory
   file: dest={{http_root}} mode=0775 owner={{http_user}} group={{http_user}} state=directory
+  become: yes
+  become_method: sudo
+  become_user: root
 - name: Copy nginx configuration
   template: src=nginx.conf dest=/etc/nginx/nginx.conf mode=0644
+  become: yes
+  become_method: sudo
+  become_user: root
   notify:
     - restart nginx
 - name: Copy site configuration
   template: src=default dest=/etc/nginx/sites-available/default mode=0644
+  become: yes
+  become_method: sudo
+  become_user: root
   notify:
     - restart nginx
 - name: Enable default site

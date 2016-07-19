@@ -1,22 +1,47 @@
 ---
 - name: Install git
   action: apt pkg=git-core state=installed
+#  become: yes
+#  become_method: sudo
+#  become_user: root
 - name: Create git group
   group: name=git
+  become: yes
+  become_method: sudo
+  become_user: root
 - name: Create git user
   user: name=git groups=git,{{http_user}} append=yes shell=/bin/bash home=/home/git
-- name: Add git user authorized_key, in the case of a private repo you may want to use a deploy key, see https://developer.github.com/guides/managing-deploy-keys/#deploy-keys
-  authorized_key: user=git key="{{git_user_key}}"
-- name: Create git repo directory
-  file: path=/home/git/{{git_repo_dir}}/{{git_repo}} owner=git group=git mode=0755 state=directory
+  become: yes
+  become_method: sudo
+  become_user: root
+- name: Set up GitHub deployment key
+  become: yes
+  become_method: sudo
+  become_user: git
+  copy: src={{ git_user_key }}
+        dest=/home/git/.ssh/docs_deploy_key.pub
+        owner=git
+        group=git
+        mode=0644
+- name: Setup git repo with git user authorized_key
+  become: yes
+  become_method: sudo
+  become_user: git
+  git: repo={{ git_repo }}
+       key_file={{ git_user_key }}
+       version ={{ git_branch }}
+       dest=/home/git/{{git_repo_dir}}/{{git_repo}}
+       accept_hostkey=True
 - name: Initialize bare git repo
   command: git init --bare chdir=/home/git/{{git_repo_dir}}/{{git_repo}}
-  sudo: yes
-  sudo_user: git
+  become: yes
+  become_method: sudo
+  become_user: git
 - name: Copy post-receive hook
   template: src=post-receive dest=/home/git/{{git_repo_dir}}/{{git_repo}}/hooks/post-receive
-  sudo: yes
-  sudo_user: git
+  become: yes
+  become_method: sudo
+  become_user: git
   args:
     owner: git
     group: git
