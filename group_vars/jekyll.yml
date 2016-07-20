@@ -12,5 +12,5 @@ git_user_key: /home/cloud-user/.ssh/docs_deploy_key.pub
 
 # These two will form the path for the git remote:
 # e.g. git@example.com:repos/example-repo.git
-git_repo: metapod-docs.git
+git_repo: git@github.com:annegentle/metapod-docs.git
 git_repo_dir: repos
