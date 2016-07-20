@@ -18,18 +18,18 @@
   become: yes
   become_method: sudo
   become_user: git
-  copy: src={{ git_user_key }}
-        dest=/home/git/.ssh/docs_deploy_key.pub
-        owner=git
-        group=git
-        mode=0644
+  command: cp /tmp/docs_deploy_key /home/git/.ssh/id_rsa
+- name: Change GitHub deployment key permissions
+  become: yes
+  become_method: sudo
+  become_user: git
+  command: chmod 600 /home/git/.ssh/id_rsa
 - name: Setup git repo with git user authorized_key
   become: yes
   become_method: sudo
   become_user: git
-  git: repo={{ git_repo }}
-       key_file={{ git_user_key }}
-       version ={{ git_branch }}
+  git: repo={{git_repo}}
+       version={{git_branch}}
        dest=/home/git/{{git_repo_dir}}/{{git_repo}}
        accept_hostkey=True
 - name: Initialize bare git repo
@@ -41,8 +41,8 @@
   template: src=post-receive dest=/home/git/{{git_repo_dir}}/{{git_repo}}/hooks/post-receive
   become: yes
   become_method: sudo
-  become_user: git
+  become_user: root
   args:
     owner: git
-    group: git
+    group: users
     mode: 0755
