@@ -3,4 +3,4 @@
 - name: Install curl
   action: apt pkg=curl state=installed
 - name: Install ruby and rvm
-  script: rvm_install.sh "{{ruby_version}}" > /var/log/rvm_install.log
+  script: rvm_install.sh "{{ruby_version}}"
