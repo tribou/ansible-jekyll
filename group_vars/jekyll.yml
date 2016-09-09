@@ -2,15 +2,17 @@
 # All ansible-jekyll variables
 # Override any in your local ansible group_vars/jekyll.yml
 http_user: cloud
+git_user: cloud
 http_root: /var/www/public
 jekyll_version: 3.0.5
 ruby_version: 2.3.1
 
 server_hostname: $hostname
 git_branch: master
-git_user_key: /home/cloud/.ssh/docs_deploy_key.pub
+git_user_key: "{{ lookup('file', '~/.ssh/id_rsa') }}"
 
 # These two will form the path for the git remote:
 # e.g. git@example.com:repos/example-repo.git
-git_repo: git@github.com:annegentle/summit-sample.git
+git_repo_url: https://github.com/annegentle/summit-example.git
+git_repo: summit-example
 git_repo_dir: repos
