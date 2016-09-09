@@ -1,5 +1,8 @@
 ---
 - hosts: jekyll
+  remote_user: cloud
+  become: yes
+  become_method: sudo
   roles:
     - common
     - nginx
