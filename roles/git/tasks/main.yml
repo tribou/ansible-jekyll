@@ -1,23 +1,17 @@
 ---
 - name: Install git
   action: apt pkg=git-core state=installed
-- name: Create git group
-  group: name=git
-- name: Create git user
-  user: name=git groups=git,{{http_user}} append=yes shell=/bin/bash home=/home/git
-- name: Add git user authorized_key
-  authorized_key: user=git key="{{git_user_key}}"
-- name: Create git repo directory
-  file: path=/home/git/{{git_repo_dir}}/{{git_repo}} owner=git group=git mode=0755 state=directory
-- name: Initialize bare git repo
-  command: git init --bare chdir=/home/git/{{git_repo_dir}}/{{git_repo}}
-  sudo: yes
-  sudo_user: git
+- name: read-write git checkout from repo
+  become_user: "{{ git_user }}"
+  git:
+    repo: "{{ git_repo_url }}"
+    dest: "/home/{{ git_user }}/{{ git_repo }}"
+    version: "{{ git_branch }}"
 - name: Copy post-receive hook
-  template: src=post-receive dest=/home/git/{{git_repo_dir}}/{{git_repo}}/hooks/post-receive
-  sudo: yes
-  sudo_user: git
+  template: src=post-receive dest=/home/cloud-user/summit-example/.git/hooks/post-receive
+  become: yes
+  become_method: sudo
   args:
-    owner: git
+    owner: "{{ git_user }}"
     group: git
     mode: 0755
