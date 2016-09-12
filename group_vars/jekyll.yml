@@ -1,8 +1,8 @@
 ---
 # All ansible-jekyll variables
 # Override any in your local ansible group_vars/jekyll.yml
-http_user: cloud
-git_user: cloud
+http_user: cloud-user
+git_user: cloud-user
 http_root: /var/www/public
 jekyll_version: 3.0.5
 ruby_version: 2.3.1
